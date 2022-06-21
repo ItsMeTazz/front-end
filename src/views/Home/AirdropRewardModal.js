@@ -3,6 +3,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import useGrapeFinance from '../../hooks/useGrapeFinance';
 import useWalletNodesAndNFTs from '../../hooks/useWalletNodesAndNFTs';
+import {NFT_TICKET_COUNT, GRAPE_NODE_MULTIPLIER, WINE_NODE_MULTIPLIER, GRAPEMIMSW_NODE_MULTIPLIER, GOON_MULTIPLIER, GLASS_MULTIPLIER, DECANTER_MULTIPLIER, GOBLET_MULTIPLIER} from '../../utils/constants';
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -20,6 +21,10 @@ const useStyles = makeStyles((theme) => ({
   purpleText: {
     fontSize: '16px',
     color: '#930993'
+  },
+  noEligible: {
+    fontSize: '16px',
+    color: 'red'
   },
   subTitle: {
     color: '#0a274280',
@@ -76,14 +81,6 @@ const style = {
   borderRadius: '12px',
 };
 
-const NFT_TICKET_COUNT = 9600;
-const GRAPE_NODE_MULTIPLIER = 1;
-const WINE_NODE_MULTIPLIER = 3;
-const GRAPEMIMSW_NODE_MULTIPLIER = 1;
-const GOON_MULTIPLIER = 1;
-const GLASS_MULTIPLIER = 3;
-const DECANTER_MULTIPLIER = 9;
-const GOBLET_MULTIPLIER = 30;
 
 const AirdropRewardModal = ({ open, handleClose, grapes, grapePrice, wines, winePrice, grapeMimSW, grapeMimSWPrice, totalGrapes, totalWine, totalGrapeMimSW }) => {
   const grapeFinance = useGrapeFinance();  
@@ -155,6 +152,15 @@ const AirdropRewardModal = ({ open, handleClose, grapes, grapePrice, wines, wine
   // const getShareGrapeMimSW = () => {
   //   return Number((ticketNumber * totalGrapeMimSW) / (getTotalTicketsFromNodes() + NFT_TICKET_COUNT)).toFixed(2);
   // }
+
+  const elibileToAirdrop = () => {
+    return walletNodesAndNFTs && 
+            (manualEntry === true ||
+            walletNodesAndNFTs.goonBags > 0 ||
+            walletNodesAndNFTs.glasses > 0 ||
+            walletNodesAndNFTs.decanters > 0 ||
+            walletNodesAndNFTs.goblets > 0)
+  }
 
   const getTotalTicketsFromNodes = () => {
     return (getNumberOfNodes('GRAPE') * GRAPE_NODE_MULTIPLIER) + 
@@ -274,10 +280,16 @@ const AirdropRewardModal = ({ open, handleClose, grapes, grapePrice, wines, wine
               <Typography className={classes.biggerText}><b>TOTAL TICKETS: {getTotalTicketsFromNodes() + NFT_TICKET_COUNT}</b></Typography>
 
               <h2 sx={{ marginTop: '20px'}} style={{fontSize: '22px'}}>Results</h2>
-              <Box className={classes.purpleText}><b>At current prices, your {ticketNumber} tickets are worth ≈${getShareDollarValue()}</b></Box>
-              <Typography className={classes.text}>≈{getShareGrapes()} Grape(s)</Typography>
-              <Typography className={classes.text}>≈{getShareWines()} Wine(s)</Typography>
-              {/*<Typography className={classes.text}>≈{getShareGrapeMimSW()} Grape-Mim SW(s)</Typography>*/}
+              {elibileToAirdrop() ?  
+                <div>
+                  <Box className={classes.purpleText}><b>At current prices, your {ticketNumber} tickets are worth ≈${getShareDollarValue()}</b></Box>
+                  <Typography className={classes.text}>≈{getShareGrapes()} Grape(s)</Typography>
+                  <Typography className={classes.text}>≈{getShareWines()} Wine(s)</Typography>
+                </div>
+                : 
+                <Typography className={classes.noEligible}>You are not eligible to the NFT monthly airdrop. You need to own at least 1 NFT (any kind) and at least 1 node (any kind).</Typography>
+              }
+
 
               <Box sx={{ fontStyle: 'italic', marginTop: '10px', fontSize: '11px' }}>Please note that the numbers are only an estimation, they are based upon the current balance of the reward pool and the current prices. They also estimate that all NFTs are held by node holders. Do not consider the results as your final reward amount.</Box>
             </Box>
