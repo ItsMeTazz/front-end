@@ -67,7 +67,10 @@ const NodesInfoCard: React.FC<NodesInfoCardProps> = ({bank}) => {
                     {bank.depositTokenName}
                   </Typography>
                   <Typography color="textSecondary">
-                    <span>Lock your {bank.depositTokenName} to earn daily yields + airdrops</span>
+                    <span>
+                      Lock your {bank.depositTokenName} to earn daily yields{' '}
+                      {bank.depositTokenName !== 'GRAPE-MIM-SW' && `+ POPs airdrops`}
+                    </span>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -85,15 +88,10 @@ const NodesInfoCard: React.FC<NodesInfoCardProps> = ({bank}) => {
                 <Grid item>
                   <Grid container alignItems="baseline" justifyContent="space-between">
                     <Grid item>
-                      <span className="card-info-text">TVL</span>
+                      <span className="card-info-text">Daily</span>
                     </Grid>
                     <Grid item>
-                      <span className="info-card-price">
-                        $
-                        {statsOnPool?.TVL
-                          ? Number(Number(statsOnPool?.TVL).toFixed(0)).toLocaleString('en-US')
-                          : '-.--'}
-                      </span>
+                      <span className="info-card-price">{bank.closedForStaking ? '0.00' : statsOnPool?.dailyAPR}%</span>
                     </Grid>
                   </Grid>
                 </Grid>
@@ -105,10 +103,12 @@ const NodesInfoCard: React.FC<NodesInfoCardProps> = ({bank}) => {
             <Grid item>
               <Grid container justifyContent="space-between">
                 <Grid item>
-                  <span className="card-info-text">Daily APR</span>
+                  <span className="card-info-text">TVL</span>
                 </Grid>
                 <Grid item>
-                  <b className={'card-info-value'}>{bank.closedForStaking ? '0.00' : statsOnPool?.dailyAPR}%</b>
+                  <b className={'card-info-value'}>
+                    ${statsOnPool?.TVL ? Number(Number(statsOnPool?.TVL).toFixed(0)).toLocaleString('en-US') : '-.--'}
+                  </b>
                 </Grid>
               </Grid>
             </Grid>
