@@ -29,7 +29,8 @@ import beefyImg from '../../assets/img/beefy.png';
 import yieldwolfImg from '../../assets/img/yieldwolf.png';
 import debankImg from '../../assets/img/debank.png';
 import rebatesImg from '../../assets/img/rebates.png';
-import lcImg from '../../assets/img/lc.png';
+import vintage from '../../assets/img/vintage-token.png';
+import winemaker from '../../assets/img/Winemaker.png';
 import dashboardImg from '../../assets/img/dashboard.png';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -423,11 +424,10 @@ const Page: React.FC = ({children}) => {
               />
             </Tooltip>
           </Link>
-
           <List>
-            <Tooltip arrow followCursor title={open ? '' : 'LC Presale'} placement="top-start">
+            <Tooltip arrow followCursor title={open ? '' : 'Winemaker Game'} placement="top-start">
               <a
-                href="https://grape.liquidcapital.finance/"
+                href="https://winemaker.grapefinance.app/"
                 target="_blank"
                 className="menu-item"
                 rel="noopener noreferrer"
@@ -448,10 +448,42 @@ const Page: React.FC = ({children}) => {
                       justifyContent: 'center',
                     }}
                   >
-                    <img src={lcImg} alt="LC" height={25} />
+                    <img src={winemaker} alt="Winemaker Game" height={25} />
                   </ListItemIcon>
 
-                  <ListItemText primary="LC Presale" sx={{opacity: open ? 1 : 0}} />
+                  <ListItemText primary="Winemaker Game" sx={{opacity: open ? 1 : 0}} />
+                </ListItemButton>
+              </a>
+            </Tooltip>
+          </List>
+          <List>
+            <Tooltip arrow followCursor title={open ? '' : 'Winemaker Mint'} placement="top-start">
+              <a
+                href="https://mint.grapefinance.app/"
+                target="_blank"
+                className="menu-item"
+                rel="noopener noreferrer"
+                style={{padding: 0, display: 'block'}}
+              >
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      color: 'white',
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <img src={vintage} alt="Winemaker Mint" height={25} />
+                  </ListItemIcon>
+
+                  <ListItemText primary="Winemaker Mint" sx={{opacity: open ? 1 : 0}} />
                 </ListItemButton>
               </a>
             </Tooltip>
